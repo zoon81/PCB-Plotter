@@ -1,12 +1,7 @@
-PCB-Plotter
-===========
-
-DIY PCB Plotter mashine.Direnct ink to the PCB.
+Tiny CNC machine
+===========<br>
+I implemented PCB making tools with tiny CNC machine.
 <br>
-You can find more detail on:
-<br>
-http://lovvcostlab.blogspot.hu/2014/07/pcb-plotter-aka-direct-ink-to-pcb.html
-<br>
-If you have any question contact me!
-<br>
-zoon81@gmail.com
+PCB-Plotter is a tool for draw the conductive traces. This is works like a well known toner transfer method but you don't need any printer,paper,and iron.
+===========<br>
+PCB-MAKER is make traces on the PCB like a drill but not in the same way as you think . I am working on this machine .
