@@ -1,4 +1,3 @@
-#define F_CPU 8000000L
 #include "DevBoard_lib.h"
 #include <stdlib.h>
 #define steepdelay 3
@@ -85,7 +84,8 @@ int main() {
 			//UARTSendString("Z not move\n\r");
 
 		}
-		if ( abs( abs(xnow-xcoordinate) - abs(ynow-ycoordinate) ) < 2 ) { //some correction because the when we rounded we lost some details
+		// DUAL AXIS MOVEMENTS on X and Y.The motion on X and Y axes are the same so this is syncronous movement.
+		if ( abs( abs(xnow-xcoordinate) - abs(ynow-ycoordinate) ) < 2 ) { //some correction because when we rounded we lost some details
 
 			if(xnow > xcoordinate)
 				xdir = 0;
@@ -97,41 +97,42 @@ int main() {
 			else
 				ydir = 1;
 
-		/* DEBUG MESSANGE
-		 * 	UARTSendString("I going to :");
-			UARTSendInt(abs(ynow-ycoordinate));
-			UARTSendString(" ");
-			UARTSendInt(ydir);
-			UARTSendString(" ");
-			UARTSendInt(xdir);
-			UARTSendString("\n\r");
-		 */
 			moveXY(abs(ynow-ycoordinate),xdir,ydir,delayXY);
 
+
+		  // ONE DIRECTION MOVEMENTS IS X or Y AXIS movement is 0 ELSE ASYNC MOVEMENTS
 		}
-		else {
-			if (xnow < xcoordinate) {
-				fowardA(xcoordinate - xnow, delayXY);
-				//UARTSendString("X going foward\n\r");
+		if( (abs(xnow-xcoordinate) == 0) | (abs(ynow-ycoordinate) == 0)) {
+			if(ynow-ycoordinate){ // IF Y movement is 0 we will move on X axes ELSE X movement sould 0 because we are is ONE DICTION MOVEMENTS so we move on Y
+		  		if (xnow < xcoordinate) {
+					fowardA(xcoordinate - xnow, delayXY);
+					//UARTSendString("X going foward\n\r");
+				}
+				else {
+					backwardA(xnow - xcoordinate, delayXY);
+					//UARTSendString("X going backward\n\r");
+				}
 			}
-			else {
-				backwardA(xnow - xcoordinate, delayXY);
-				//UARTSendString("X going backward\n\r");
-			}
+			else{
+				if (ynow < ycoordinate) {
+					fowardB(ycoordinate - ynow, delayXY);
+					//UARTSendString("Y going foward\n\r");
+				}
+				else {
+					backwardB(ynow - ycoordinate, delayXY);
+					//UARTSendString("Y going backward\n\r");
 
-			if (ynow < ycoordinate) {
-				fowardB(ycoordinate - ynow, delayXY);
-				//UARTSendString("Y going foward\n\r");
-			}
-			else {
-				backwardB(ynow - ycoordinate, delayXY);
-				//UARTSendString("Y going backward\n\r");
-
+				}
 			}
 
 			//DEBUG MESSANGE
 			//UARTSendString("\n\r");
 		}
+	     	// ASYM MOVEMENTS
+	     	else{
+
+
+		     }
 
 		ynow = ycoordinate;
 		xnow = xcoordinate;
